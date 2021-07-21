@@ -27,7 +27,7 @@ np_arr_converted = np_arr_modifyed.astype(np.uint8)
 img = Image.fromarray(np_arr_converted)
 try:
 	img.save(('result_%s_%s.jpg' % (imgs[0].split("/")[-1].split(".")[0], \
-		imgs[-1].split("/")[-1].split(".")[0])), "JPEG")
+		imgs[-1].split("/")[-1].split(".")[0])), format="JPEG", subsampling=0, quality=100)
 except OSError as e:
     print('OSError: can not save image.')
 except Exception as e:
