@@ -17,10 +17,10 @@ kp2, des2 = orb.compute(img2, kp2)
 # res_view2 = cv.drawKeypoints(img2, kp2, None, color=(0,255,0), flags=0)
 # plt.imshow(res_view2), plt.show()
 
-kp1[0].pt
-kp1[0].pt
-kp2[1].pt
-kp2[1].pt
+# kp1[0].pt
+# kp1[0].pt
+# kp2[1].pt
+# kp2[1].pt
 
 bf = cv.BFMatcher()
 matches = bf.knnMatch(des1, des2, k=2)
@@ -35,18 +35,18 @@ for m,n in matches:
 		# print(np.array(kp0[m.trainIdx].pt) - np.array(kp1[m.queryIdx].pt))
 		good.append(m)
 
-src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ]).reshape(-1,1,2)
-dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ]).reshape(-1,1,2)
+# src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ]).reshape(-1,1,2)
+# dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ]).reshape(-1,1,2)
 
-M, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
+# M, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
 
-matchesMask = mask.ravel().tolist()
+# matchesMask = mask.ravel().tolist()
 
 # h,w,d = img1.shape
 # pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
-dst = cv.getPerspectiveTransform(img2,M)
+# dst = cv.getPerspectiveTransform(img2,M)
 
-# img3 = cv.drawMatches(img1,kp1,img2,kp2,matches[:10],None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-# plt.imshow(img3),plt.show()
+img3 = cv.drawMatches(img1,kp1,img2,kp2,good,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+plt.imshow(img3),plt.show()
 
 
