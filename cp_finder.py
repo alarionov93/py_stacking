@@ -50,6 +50,7 @@ for y,x in dst_pts:
 img_out = cv.warpPerspective(img1, h, (img2.shape[1]+3000, img2.shape[0]+2000))
 cv.imwrite('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1874_warped.jpg', img_out)
 cv.imwrite('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1873_kp.jpg', img2)
+
 # M, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
 
 # matchesMask = mask.ravel().tolist()
