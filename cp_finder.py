@@ -47,7 +47,7 @@ for y,x in src_pts:
 for y,x in dst_pts:
 	cv.circle(img2,(int(y),int(x)), 4, (0,255,0), -1)
 
-img_out = cv.warpPerspective(img1, h, (img2.shape[1]+3000, img2.shape[0]+2000))
+img_out = cv.warpPerspective(img1, h, (img2.shape[1]+300, img2.shape[0]+200))
 cv.imwrite('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1874_warped.jpg', img_out)
 cv.imwrite('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1873_kp.jpg', img2)
 
