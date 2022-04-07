@@ -29,8 +29,8 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
         print(files[idx:idx+stacksize])
         dir_name = '%s_%s_%s' % (idx, idx+stacksize, f_prefix)
         full_path = f'{path}/{dir_name}'
-        os.mkdir(full_path)
         try:
+            os.mkdir(full_path)
             for f in files[idx:idx+stacksize]:
                 move(f, full_path)
                 # print('move')
