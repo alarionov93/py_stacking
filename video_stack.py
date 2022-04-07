@@ -32,7 +32,7 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
         os.mkdir(full_path)
         try:
             for f in files[idx:idx+stacksize]:
-                os.move(f, full_path)
+                move(f, full_path)
                 # print('move')
         except OSError as e:
             print(e)
