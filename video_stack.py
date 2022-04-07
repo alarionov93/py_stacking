@@ -5,7 +5,7 @@ import ffmpeg
 import cv2 as cv
 import numpy as np
 
-from shutil import move, mkdir
+from shutil import move
 from photo_stack import mk_stack_res
 
 def mk_frames(filename, prefix='out_'):
