@@ -9,7 +9,7 @@ from shutil import move
 from photo_stack import mk_stack_res
 
 def mk_frames(filename, prefix='out_'):
-    fmg = ffmpeg.input(filename).output('%s%04d.png' % prefix)
+    fmg = ffmpeg.input(filename).output('%s%%04d.png' % prefix)
     print(fmg.compile(), file=sys.stdout)
     fmg.run()
 
