@@ -8,14 +8,21 @@ import numpy as np
 from shutil import move
 from photo_stack import mk_stack_res
 
-def mk_frames(filename, prefix='out_'):
-    fmg = ffmpeg.input(filename).output('%s%%04d.png' % prefix)
-    print(fmg.compile(), file=sys.stdout)
-    fmg.run()
 
-def mv_imgs(stacksize, path, f_prefix='_imgf'):
-    files = glob.glob('*.png')
-    # for idx in range(len(files)):
+def sort_by_num(x):
+    return int(x.split('_')[1].split('.')[0])
+
+def mk_frames(filename, prefix='out_', ext='.png'):
+    if not os.path.isfile('%s0001%s' % (prefix, ext)):
+        fmg = ffmpeg.input(filename).output('%s%%04d%s' % (prefix, ext))
+        print(fmg.compile(), file=sys.stdout)
+        fmg.run()
+    else:
+        print('Files exists!')
+
+def mv_imgs(stacksize, path, f_prefix='imgf'):
+    files = sorted(glob.glob('*.png'), key=sort_by_num)
+    path = '/'.join(path)
     idx = 0
     rng = int(len(files)/stacksize) + int(len(files)%stacksize)
     for i in range(rng):
@@ -26,9 +33,11 @@ def mv_imgs(stacksize, path, f_prefix='_imgf'):
         try:
             for f in files[idx:idx+stacksize]:
                 os.move(f, full_path)
+                # print('move')
         except OSError as e:
             print(e)
         mk_stack_res(full_path)
+        # print(idx)
         idx+=stacksize
 
 if __name__ == '__main__':
