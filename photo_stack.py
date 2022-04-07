@@ -4,10 +4,10 @@ import numpy as np
 import traceback
 from PIL import Image
 
-def mk_stack_res(dir_name):
+def mk_stack_res(dir_name, ext='.png'):
 
 	# when quality should not increase if we have more than 10, 100, 10000 photos?
-	path = '%s/*.jpg' % dir_name
+	path = f'{dir_name}/*{ext}'
 	imgs = glob(path)
 	print(path)
 
