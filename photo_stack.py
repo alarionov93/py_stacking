@@ -27,11 +27,15 @@ def mk_stack_res(dir_name, ext='.png'):
 	img = Image.fromarray(np_arr_converted)
 	return img
 
+def save_result_img(img, dir_name):
+	# FIXME: imgs is not defined!!
+	img.save(('%sres_%s_%s.jpg' % (dir_name, imgs[0].split("/")[-1].split(".")[0], \
+			imgs[-1].split("/")[-1].split(".")[0])), format="JPEG", subsampling=0, quality=100)
+
 if __name__ == '__main__':
 	try:
-		mk_stack_res(sys.argv[1])
-		img.save(('%sres_%s_%s.jpg' % (dir_name, imgs[0].split("/")[-1].split(".")[0], \
-			imgs[-1].split("/")[-1].split(".")[0])), format="JPEG", subsampling=0, quality=100)
+		img = mk_stack_res(sys.argv[1])
+		save_result_img(img, sys.argv[1])
 	except OSError as e:
 	    print('OSError: can not save image.')
 	except Exception as e:

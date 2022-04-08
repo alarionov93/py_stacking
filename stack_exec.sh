@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 p="$1"
 n=0

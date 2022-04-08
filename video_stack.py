@@ -6,8 +6,8 @@ import cv2 as cv
 import numpy as np
 
 from shutil import move
-from photo_stack import mk_stack_res
-
+from photo_stack import mk_stack_res, save_result_img
+# for fixing quality issues add -vcodec libx265 -crf 24
 
 def sort_by_num(x):
     return int(x.split('_')[1].split('.')[0])
@@ -36,13 +36,16 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
                 # print('move')
         except OSError as e:
             print(e)
-        mk_stack_res(full_path)
+
+        # FIXME: stupid error -> not assigning result of function!!!
+        res_frame = mk_stack_res(full_path)
+        save_result_img(res_frame, full_path)
         # print(idx)
         idx+=stacksize
 
 if __name__ == '__main__':
     in_video = sys.argv[1]
     path = in_video.split('/')[:-1]
-    mk_frames(in_video)
+    # mk_frames(in_video)
     mv_imgs(10, path)
 

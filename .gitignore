@@ -2,3 +2,4 @@ tst_imgs/*
 *.jpg
 .DS_Store
 *.pdf
+*.png
