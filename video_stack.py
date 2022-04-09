@@ -26,20 +26,23 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
     idx = 0
     rng = int(len(files)/stacksize) + int(len(files)%stacksize)
     for i in range(rng):
-        print(files[idx:idx+stacksize])
-        dir_name = '%s_%s_%s' % (idx, idx+stacksize, f_prefix)
-        full_path = f'{path}/{dir_name}'
         try:
+            print(files[idx:idx+stacksize])
+            dir_name = '%s_%s_%s' % (idx, idx+stacksize, f_prefix)
+            full_path = f'{path}/{dir_name}'
             os.mkdir(full_path)
             for f in files[idx:idx+stacksize]:
                 move(f, full_path)
                 # print('move')
         except OSError as e:
             print(e)
+        except IndexError as e:
+            print(e)
+            break
 
         # FIXME: stupid error -> not assigning result of function!!!
-        res_frame = mk_stack_res(full_path)
-        save_result_img(res_frame, full_path)
+        res_frame, nn = mk_stack_res(full_path)
+        save_result_img(res_frame, full_path, nn)
         # print(idx)
         idx+=stacksize
 
@@ -48,4 +51,5 @@ if __name__ == '__main__':
     path = in_video.split('/')[:-1]
     # mk_frames(in_video)
     mv_imgs(10, path)
+    
 
