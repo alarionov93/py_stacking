@@ -38,7 +38,6 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
             print(e)
         except IndexError as e:
             print(e)
-            break
 
         # FIXME: stupid error -> not assigning result of function!!!
         res_frame, nn = mk_stack_res(full_path)
@@ -49,7 +48,8 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
 if __name__ == '__main__':
     in_video = sys.argv[1]
     path = in_video.split('/')[:-1]
-    # mk_frames(in_video)
-    mv_imgs(10, path)
-    
+    mk_frames(in_video)
+    mv_imgs(4, path)
+
+
 
