@@ -51,5 +51,8 @@ if __name__ == '__main__':
     mk_frames(in_video)
     mv_imgs(4, path)
 
+    for d in sorted(glob.glob('*imgf'), key=lambda x: int(x.split('_')[0]))
+        move(f'{d}/res*', '..')
+
 
 
