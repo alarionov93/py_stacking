@@ -34,7 +34,7 @@ def save_result_img(img, dir_name, newname):
 
 if __name__ == '__main__':
 	try:
-		img, newname = mk_stack_res(sys.argv[1])
+		img, newname = mk_stack_res(sys.argv[1], sys.argv[2])
 		save_result_img(img, sys.argv[1], newname)
 	except OSError as e:
 	    print('OSError: can not save image.')
