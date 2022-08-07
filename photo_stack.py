@@ -4,7 +4,7 @@ import numpy as np
 import traceback
 from PIL import Image
 
-def mk_stack_res(dir_name, ext='.png'):
+def mk_stack_res(dir_name, ext='.png', increase_brightness=False):
 
 	# when quality should not increase if we have more than 10, 100, 10000 photos?
 	path = f'{dir_name}/*{ext}'
@@ -20,8 +20,10 @@ def mk_stack_res(dir_name, ext='.png'):
 		img = Image.open(i)
 		np_arr[idx] = np.array(img)
 		idx += 1
-
-	np_arr_modifyed = np.median(np_arr, 0)
+	if increase_brightness:
+		np_arr_modifyed = np.sum(np_arr, 0)
+	else:
+		np_arr_modifyed = np.median(np_arr, 0)
 	np_arr_converted = np_arr_modifyed.astype(np.uint8)
 
 	img = Image.fromarray(np_arr_converted)
