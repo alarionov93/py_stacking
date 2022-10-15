@@ -1,6 +1,6 @@
 from itertools import product
 from glob import glob
-from random import choice
+from random import shuffle
 from PIL import Image
 
 import sys
@@ -9,36 +9,26 @@ import cv2 as cv
 
 dir_name = sys.argv[1]
 
-#newname = f'res_{imgs[0].split("/")[-1].split(".")[0]}_{imgs[-1].split("/")[-1].split(".")[0]}'
-
-imgs_a = [cv.imread(x, 1) for x in glob(f'{dir_name}/*.png')]
+imgs = glob(f'{dir_name}/*.png')
+newname = f'res_{imgs[0].split("/")[-1].split(".")[0]}_{imgs[-1].split("/")[-1].split(".")[0]}'
+imgs_a = [cv.imread(x, 1) for x in imgs]
 
 w,h = imgs_a[0].shape[1],imgs_a[0].shape[0]
 
 iimages = np.zeros((w*4,h*4,3), dtype=np.uint8)
-
-a = [0,1,2,3]
-b = [0,1,2,3]
-in_arr_a = []
-in_arr_b = []
-for x in range(len(a)):
-    el = choice(a)
-    in_arr_a.append(el)
-    a.remove(el)
-
-for x in range(len(b)):
-    el = choice(b)
-    in_arr_b.append(el)
-    b.remove(el)
-# TODO: replace for loops by place (to make random coordinates every iteration on source pixel)
+a = b = [0,1,2,3]
 n = 0
-for dy, dx in product(in_arr_a, in_arr_b):
-    print(dx,dy)
+f = open('err.log', 'w')
+for dx, dy in product(a, b):
+    # print(dx,dy)
+    # dx = dy = 0
+    # shuffle(imgs_a)
     for y,x in product(range(w), range(h)):
         iimages[y*4+dy,x*4+dx] = imgs_a[n][x, y]
+        f.write(f'{y*4+dy}, {x*4+dx}, {n}, {x}, {y}\n')
     n+=1
-
+f.close()
 # iii = np.sum(iimages, 0)
 # TODO: newname!
-cv.imwrite(f'{dir_name}/16x_test_res.png', iimages)
+cv.imwrite(f'{dir_name}/{newname}.jpg', iimages)
 

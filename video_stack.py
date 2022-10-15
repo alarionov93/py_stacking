@@ -9,7 +9,7 @@ from shutil import move
 from photo_stack import mk_stack_res, save_result_img
 # for fixing quality issues add -vcodec libx265 -crf 24
 
-STACK_VALUE = 4
+STACK_VALUE = 2
 
 def sort_by_num(x):
     return int(x.split('_')[1].split('.')[0])
@@ -27,7 +27,7 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
     idx = 0
     rng = int(len(files)/stacksize) + int(len(files)%stacksize)
     print(rng)
-    for i in range(rng-3):
+    for i in range(rng-1):
         try:
             print(files[idx:idx+stacksize])
             dir_name = '%s_%s_%s' % (idx, idx+stacksize, f_prefix)
@@ -49,18 +49,30 @@ def mv_imgs(stacksize, path, f_prefix='imgf'):
 
 if __name__ == '__main__':
     in_video = sys.argv[1]
+    # if '--stack-value':
     v_name = in_video[-1]
     path = in_video.split('/')[:-1]
     path = '/'.join(path)
     mk_frames(in_video)
     mv_imgs(STACK_VALUE, path)
 
-    for d in sorted(glob.glob('*imgf'), key=lambda x: int(x.split('_')[0])):
-        move(f'{d}/res*', '..')
+    for d in sorted(glob.glob('*imgf'), key=lambda x: int(x.split('_')[1])):
+        try:
+            f = (int(d.split('/')[-1].split('_')[0])+1, int(d.split('/')[-1].split('_')[1]))
+            files = glob.glob(f'{d}/res*.jpg')
+            f_name = files[0].split('/')[-1]
+            print(files[0])
+            subprocess.run(['mv', files[0], f'{path}/{f_name}'])
+        except IndexError as e:
+            print(e)
+        except OSError as e:
+            print(e)
+
     # from this point - need to write on ffmpeg (but this way brakes the color) ? Or learn how to use libx265 with cv2 ?
-    imgs = [cv.imread(x) for x in sorted(glob(f'{path}/res*')) ]
+    print(path)
+    imgs = [cv.imread(x) for x in sorted(glob.glob(f'{path}/res*')) ]
     fourcc = cv.VideoWriter_fourcc(*'mp4v')
-    out = cv.VideoWriter(f'{path}/{v_name}_cv_test.mov', fourcc, 30, (1920,1080))
+    out = cv.VideoWriter(f'{path}/{v_name}_cv_test.mp4', fourcc, 30, (1920,1080))
     for i in imgs:
         out.write(i)
     out.release()
