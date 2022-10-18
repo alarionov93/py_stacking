@@ -1,5 +1,6 @@
 from glob import glob
 import sys
+import cv2 as cv
 import numpy as np
 import traceback
 from PIL import Image
@@ -27,9 +28,17 @@ def mk_stack_res(dir_name, ext='.png', increase_brightness=False):
 	np_arr_converted = np_arr_modifyed.astype(np.uint8)
 
 	img = Image.fromarray(np_arr_converted)
-	newname = f'res_{imgs[0].split("/")[-1].split(".")[0]}_{imgs[-1].split("/")[-1].split(".")[0]}'
+	newname = f'res_{imgs[0].split("/")[-1].split(".")[0]}'
 
 	return img, newname
+
+def image_denoise(file, ext='.png'):
+	img = Image.open(file)
+	res = cv.fastNlMeansDenoisingColored(np.array(img), 3,3,7,21)
+	i_res = Image.fromarray(res.astype(np.uint8))
+	newname = f'res_{file.split("/")[-1].split(".")[0]}'
+
+	return i_res, newname
 
 def save_result_img(img, dir_name, newname):
 	img.save((f'{dir_name}/{newname}.jpg'), format="JPEG", subsampling=0, quality=100)
