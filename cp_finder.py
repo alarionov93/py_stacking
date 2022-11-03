@@ -5,13 +5,14 @@ from matplotlib import pyplot as plt
 img1 = cv.imread('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1874_s.jpg')
 img2 = cv.imread('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1873_s.jpg')
 
-orb = cv.ORB_create()
+# orb = cv.ORB_create()
+sift = cv.SIFT_create()
 
-kp1 = orb.detect(img1, None)
-kp1, des1 = orb.compute(img1, kp1)
+# kp1 = orb.detect(img1, None)
+kp1, des1 = sift.detectAndCompute(img1, None)
 
-kp2 = orb.detect(img2, None)
-kp2, des2 = orb.compute(img2, kp2)
+# kp2 = orb.detect(img2, None)
+kp2, des2 = sift.detectAndCompute(img2, None)
 # res_view1 = cv.drawKeypoints(img1, kp1, None, color=(0,255,0), flags=0)
 # plt.imshow(res_view1), plt.show()
 # res_view2 = cv.drawKeypoints(img2, kp2, None, color=(0,255,0), flags=0)
