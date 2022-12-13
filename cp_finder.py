@@ -9,6 +9,8 @@ img2 = cv.imread('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1873_s.jpg')
 sift = cv.SIFT_create()
 
 # kp1 = orb.detect(img1, None)
+# [ TODO: !!!!! ] for by pairs of files: промискуитетная программа!!!!!!
+#  Все со всеми должны спариться!!
 kp1, des1 = sift.detectAndCompute(img1, None)
 
 # kp2 = orb.detect(img2, None)
@@ -36,6 +38,7 @@ for m,n in matches:
 		good.append(m)
 
 		# print(np.array(kp0[m.trainIdx].pt) - np.array(kp1[m.queryIdx].pt))
+
 src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
 dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ])
 
@@ -62,5 +65,4 @@ cv.imwrite('/Users/sanya/Work/py_stacking/tst_imgs/IMG-1873_kp.jpg', img2)
 
 # img3 = cv.drawMatches(img1,kp1,img2,kp2,good,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 # plt.imshow(img3),plt.show()
-
 

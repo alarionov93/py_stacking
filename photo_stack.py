@@ -5,6 +5,14 @@ import numpy as np
 import traceback
 from PIL import Image
 
+# TODO: implement cp_finder.py for stacking images, so them could perspectiveTransform all to first image!
+
+def align_images(imgs):
+	ctrl_img = imgs[0]
+	for i in imgs[1:]:
+		print(i)
+
+
 def mk_stack_res(dir_name, ext='.png', increase_brightness=False):
 
 	# when quality should not increase if we have more than 10, 100, 10000 photos?
